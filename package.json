@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "react-scripts": "^5.0.1",
+    "shpjs": "^4.0.4"
+  }
+}
