@@ -1,17 +1,20 @@
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+import Badge from 'react-bootstrap/Badge';
+
+import NavbarTop from './components/Navbar';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
+    <div className="App" id='MainDashboard'>
+      {/* <header className="App-header height-20px">
         Chungus
-      </header>
-
-      <div className='Main'>
-        <h1 className="Title">
-            GeoSpatial Data Dashboard
-        </h1>
-      </div>
+      </header> */}
+      <NavbarTop/>
+      {/* <div className='test'>
+        <Badge as="Button" className='btn-primary btn-md'>WOW YAAR</Badge>
+      </div> */}
     </div>
   );
 }
