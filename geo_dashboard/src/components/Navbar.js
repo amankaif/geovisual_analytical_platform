@@ -9,7 +9,7 @@ const NavbarTop = function(){
   return (
     <Navbar bg='light' expand='md'>
         <Container className='px-1 py-0'>
-            <Navbar.Brand href='#mainDashboard' className='ms-2'>Geo-Dashboard</Navbar.Brand>
+            <Navbar.Brand href='#MainDashboard' className='ms-2'>Geo-Dashboard</Navbar.Brand>
             {/* <div className='me-auto' style={{width:'auto'}}></div> */}
         
             <span className='d-flex'>

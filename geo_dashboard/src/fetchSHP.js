@@ -1,7 +1,6 @@
-import shp from 'shpjs';
-
 const fetchSHP = () => {
-    shp("files/pandr.zip").then(function(geojson){
-		console.log(geojson);
-	});
-}
+  shp("files/pandr.zip").then(function (geojson) {
+    console.log("hello");
+    console.log(geojson);
+  });
+};
