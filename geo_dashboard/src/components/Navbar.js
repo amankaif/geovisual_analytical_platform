@@ -1,10 +1,9 @@
 import React from 'react'
 
-
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
+// import NavDropdown from 'react-bootstrap/NavDropdown';
 
 const NavbarTop = function(){
   return (
@@ -14,8 +13,8 @@ const NavbarTop = function(){
             {/* <div className='me-auto' style={{width:'auto'}}></div> */}
         
             <span className='d-flex'>
-                <Nav.Link href='#MainDashboard' className='px-4'>Home</Nav.Link>
-                <Nav.Link href='#' className='px-4'>Map</Nav.Link>
+                <Nav.Link href='#MainDashboard' className='px-4 d-flex'>Home</Nav.Link>
+                <Nav.Link href='http://localhost:8084/openlayers_app' className='px-4 btn-secondary'>Map</Nav.Link>
             </span>
             {/* <Navbar.Toggle aria-controls="basic-navbar-nav">Extra</Navbar.Toggle> */}
             {/* <Navbar.Collapse id='basic-navbar-nav'>

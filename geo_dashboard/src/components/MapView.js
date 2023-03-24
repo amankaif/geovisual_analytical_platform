@@ -63,7 +63,7 @@ const MapView = () => {
     </div>
     <div id="query_tab">
         <nav>
-            <div class="nav nav-tabs" id="nav-tab" role="tablist" style="font-size:14px;">
+            <div class="nav nav-tabs" id="nav-tab" role="tablist" style={{fontSize:'14px'}}>
                 <button class="nav-link active" id="nav-attributes-tab" data-bs-toggle="tab" data-bs-target="#nav-attributes" type="button" role="tab" aria-controls="nav-attributes" aria-selected="true">Select by Attributes</button>
                 <button class="nav-link" id="nav-draw-tab" data-bs-toggle="tab" data-bs-target="#nav-draw" type="button" role="tab" aria-controls="nav-draw" aria-selected="false">Select by Draw</button>
             </div>
@@ -116,7 +116,7 @@ const MapView = () => {
     </div>
 
 
-    <div id="table_data" style="font-size:15px;"></div>
+    <div id="table_data" style={{fontSize:'15px'}}></div>
     {/* <!-- Scrollable modal --> */}
 
     <div class="modal fade" id="wms_layers_window" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -127,7 +127,7 @@ const MapView = () => {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <table id="table_wms_layers" class="table table-hover" style="font-size:15px;">
+                    <table id="table_wms_layers" class="table table-hover" style={{fontSize:'15px'}}>
                     </table>
                 </div>
                 <div class="modal-footer">
