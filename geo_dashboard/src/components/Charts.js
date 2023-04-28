@@ -22,7 +22,7 @@ const Charts = () => {
   // });`;
   return (
     <div>
-      <Container className="">Test</Container>
+      <Container className="">Charts</Container>
     </div>
   );
 };
