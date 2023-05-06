@@ -7,8 +7,12 @@
 import express from "express";
 import cors from "cors";
 import * as dotenv from "dotenv";
+
+import shpRoutes from "./routes/shp.js";
+
 const app = express();
 dotenv.config();
+
 
 app.use(
   cors({
@@ -18,11 +22,12 @@ app.use(
 );
 
 app.use(express.json());
+app.use("/shp", shpRoutes);
 // app.use("/auth", authRoutes);
 
-app.post("/upload_shp", (req, res) => {
-  console.log(req.body);
-});
+// app.post("/upload_shp", (req, res) => {
+//   console.log(req.body);
+// });
 
 // app.use(cookieParser(process.env.JWT_SECRET));
 // app.use(
