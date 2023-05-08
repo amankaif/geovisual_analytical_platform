@@ -5,6 +5,7 @@ import axios from "axios";
 
 const UploadSHP = () => {
   const reader = new FileReader();
+  var layer_name = "";
   const getFile = async (event) => {
     event.preventDefault();
     // console.log("hello");
@@ -12,9 +13,9 @@ const UploadSHP = () => {
     // console.log(event.target.files[0]);
     // var file = event.target.files[0];
     // console.log(event.target.files[0]);
-    console.log(file);
     const formDataSHP = new FormData();
-    formDataSHP.append("none", "none");
+    // console.log(document.getElementById("layer_name").value);
+    formDataSHP.append("layer_name", layer_name);
     formDataSHP.append("shp_file", file);
     axios({
       method: "post",
@@ -50,6 +51,16 @@ const UploadSHP = () => {
             id="formShpFile"
             // onChange={getFile}
           />
+          <br></br>
+          <input
+            className="form-control"
+            type="text"
+            id="layer_title"
+            onChange={(event) => {
+              layer_name = event.target.value;
+            }}
+            placeholder="Layer name"
+          ></input>
           <br></br>
           <button className="btn btn-primary" type="submit">
             Upload
