@@ -7,12 +7,14 @@
 import express from "express";
 import cors from "cors";
 import * as dotenv from "dotenv";
+import fs from "fs";
+import slash from "slash";
+import shp from "shpjs/dist/shp.js";
 
 import shpRoutes from "./routes/shp.js";
 
 const app = express();
 dotenv.config();
-
 
 app.use(
   cors({
@@ -58,3 +60,28 @@ const PORT = process.env.PORT || 5000;
 // .catch((error) => console.log(`${error}, did not connect`));
 
 app.listen(PORT, () => console.log(`server port: ${PORT}`));
+
+// # SAVE LAYER FEATURES TO JSON
+
+var geoJson = {};
+export var featuresObject = {};
+
+const toFeaturesJson = (buffer) => {
+  var shpPromise = shp(buffer).then((geoJson) => {
+    // geoJson.features.map((row) => {
+    //   featuresObject[row.properties.dtname] = ;
+    // });
+
+    featuresObject = geoJson;
+    // fs.writeFileSync("features.json", JSON.stringify(geoJson));
+  });
+};
+
+var file = fs.readFileSync(
+  slash(
+    String.raw`D:\Coding\Projects\University\RnD\geovisual_analytical_platform\server_side\Crime_Districtwise.zip`
+  )
+);
+
+toFeaturesJson(file);
+// console.log("tmp", tmp);

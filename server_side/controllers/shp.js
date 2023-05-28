@@ -4,6 +4,8 @@ import { dirname } from "path";
 import slash from "slash";
 import axios from "axios";
 
+import { featuresObject } from "../server.js";
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -12,7 +14,6 @@ shp_files_dir = slash(shp_files_dir);
 
 export const shpUpload = (req, res) => {
   const orig_dir_name = req.file.originalname.slice(0, -4);
-  res.send("received");
   decompress(
     "shp_files/" + req.file.originalname,
     "shp_files/" + orig_dir_name
@@ -114,6 +115,7 @@ export const shpUpload = (req, res) => {
         .request(config)
         .then((response) => {
           console.log(JSON.stringify(response.data));
+          res.send("Uploaded Datastore and Layer");
         })
         .catch((error) => {
           console.log(error);
@@ -123,4 +125,8 @@ export const shpUpload = (req, res) => {
     POST_dataStore();
     POST_featureType();
   });
+};
+
+export const featuresJson = (req, res) => {
+  res.json(featuresObject);
 };

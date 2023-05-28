@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import shp from "shpjs/dist/shp";
 import axios from "axios";
 // import { fs } from "file-system";
+import { MapContext } from "../contexts/MapContext";
 
 const UploadSHP = () => {
+  const { mapJson, setMapJson } = useContext(MapContext);
+
   const reader = new FileReader();
   var layer_name = "";
   const getFile = async (event) => {
@@ -17,7 +20,8 @@ const UploadSHP = () => {
     // console.log(document.getElementById("layer_name").value);
     formDataSHP.append("layer_name", layer_name);
     formDataSHP.append("shp_file", file);
-    axios({
+    console.log("uploading");
+    await axios({
       method: "post",
       url: "http://localhost:5000/shp/upload",
       data: formDataSHP,
@@ -29,11 +33,8 @@ const UploadSHP = () => {
     });
     const buffer = file.arrayBuffer().then(async (buffer) => {
       console.log(buffer);
-      // fs.appendFile("../temp/${file.name}", Buffer.from(buffer));
       const GeoJSON = await shp(buffer);
       console.log(GeoJSON);
-      // shp(buffer).then((res) => console.log(res));
-      // const GeoJSON = await shp(buffer);
     });
 
     // axios.post("/upload_shp", file);
@@ -43,7 +44,11 @@ const UploadSHP = () => {
     <div className="d-flex justify-content-center">
       <div className="w-50 mb-3 p-5">
         <form className="form-group" onSubmit={getFile}>
-          <label className="form-label my-3">Upload SHP file</label>
+          <label className="form-label my-3">
+            Upload SHP file to publish to GeoServer
+          </label>
+          <br />
+          <br />
           <input
             className="form-control"
             type="file"
@@ -63,7 +68,7 @@ const UploadSHP = () => {
           ></input>
           <br></br>
           <button className="btn btn-primary" type="submit">
-            Upload
+            Upload and publish
           </button>
         </form>
       </div>
