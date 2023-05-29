@@ -4,7 +4,11 @@ import { dirname } from "path";
 import slash from "slash";
 import axios from "axios";
 
-import { featuresArray, stateWiseDataObject } from "../server.js";
+import {
+  featuresArray,
+  stateWiseDataObject,
+  stateWiseDistrictsObject,
+} from "../server.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -131,6 +135,9 @@ export const sendFeaturesArray = (req, res) => {
   res.json(featuresArray);
 };
 
-export const sendStateWiseJson = (req, res) => {
+export const sendStateWiseAggregatedJson = (req, res) => {
   res.json(stateWiseDataObject);
+};
+export const sendStateWiseDistrictsJson = (req, res) => {
+  res.json(stateWiseDistrictsObject);
 };

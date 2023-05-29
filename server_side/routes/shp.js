@@ -1,5 +1,9 @@
 import { Router } from "express";
-import { sendStateWiseJson, shpUpload } from "../controllers/shp.js";
+import {
+  sendStateWiseAggregatedJson,
+  sendStateWiseDistrictsJson,
+  shpUpload,
+} from "../controllers/shp.js";
 import { sendFeaturesArray } from "../controllers/shp.js";
 import multer from "multer";
 
@@ -19,6 +23,7 @@ const shp_upload_multer = multer({ storage: storage });
 
 router.post("/upload", shp_upload_multer.single("shp_file"), shpUpload);
 router.get("/features", sendFeaturesArray);
-router.get("/state_wise", sendStateWiseJson);
+router.get("/state_wise", sendStateWiseAggregatedJson);
+router.get("/state_wise_districts", sendStateWiseDistrictsJson);
 
 export default router;

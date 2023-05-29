@@ -21,6 +21,7 @@ function App() {
       <MapContext.Provider value={{ mapJson, setMapJson }}>
         <NavbarTop />
         <Routes>
+          <Route path="/" element={<Charts />} />
           <Route path="/upload" element={<UploadSHP />} />
           <Route path="/charts" element={<Charts />} />
         </Routes>

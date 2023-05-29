@@ -36,6 +36,7 @@ var geoJson = {};
 
 export var featuresArray = {};
 export var stateWiseDataObject = {};
+export var stateWiseDistrictsObject = {};
 
 const toFeaturesJson = (buffer) => {
   var shpPromise = shp(buffer).then((geoJson) => {
@@ -91,6 +92,58 @@ const toStateWiseData = () => {
         2021: properties["2021s"],
       };
     }
+
+    // STATE DISTRICT WISE
+
+    if (stateWiseDistrictsObject[properties.stname]) {
+      // console.log("1");
+      // console.log(stateWiseDistrictsObject);
+
+      // console.log("2");
+      stateWiseDistrictsObject[properties.stname][properties.dtname] = {
+        2017: 0,
+        2018: 0,
+        2019: 0,
+        2020: 0,
+        2021: 0,
+      };
+
+      stateWiseDistrictsObject[properties.stname][properties.dtname][2017] =
+        properties["2017s"];
+      stateWiseDistrictsObject[properties.stname][properties.dtname][2018] =
+        properties["2018s"];
+      stateWiseDistrictsObject[properties.stname][properties.dtname][2019] =
+        properties["2019s"];
+      stateWiseDistrictsObject[properties.stname][properties.dtname][2020] =
+        properties["2020s"];
+      stateWiseDistrictsObject[properties.stname][properties.dtname][2021] =
+        properties["2021s"];
+
+      // else {
+
+      // }
+    } else {
+      // console.log("else");
+      stateWiseDistrictsObject[properties.stname] = {};
+      stateWiseDistrictsObject[properties.stname][properties.dtname] = {
+        2017: 0,
+        2018: 0,
+        2019: 0,
+        2020: 0,
+        2021: 0,
+      };
+
+      stateWiseDistrictsObject[properties.stname][properties.dtname][2017] =
+        properties["2017s"];
+      stateWiseDistrictsObject[properties.stname][properties.dtname][2018] =
+        properties["2018s"];
+      stateWiseDistrictsObject[properties.stname][properties.dtname][2019] =
+        properties["2019s"];
+      stateWiseDistrictsObject[properties.stname][properties.dtname][2020] =
+        properties["2020s"];
+      stateWiseDistrictsObject[properties.stname][properties.dtname][2021] =
+        properties["2021s"];
+    }
   });
-  // console.log(stateWiseDataObject);
+  // console.log(stateWiseDistrictsObject);
 };

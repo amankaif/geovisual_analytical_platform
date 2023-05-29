@@ -64,8 +64,11 @@ const Charts = () => {
                 Render
               </button>
             </div> */}
-        <Col className="p-2">
-          <Row>
+        <div className="h-100 p-2 m-2">
+          <div
+            // style={{ height: "1000" }}
+            className="d-flex flex-row"
+          >
             <Col
               xs={7}
               style={{ backgroundColor: "rgba(198, 201, 207, 0.2)" }}
@@ -73,15 +76,15 @@ const Charts = () => {
             >
               <Overview featuresJson={featuresJson}></Overview>
             </Col>
-            <Col
-              xs={4}
-              style={{ backgroundColor: "rgba(198, 201, 207, 0.2)" }}
-              className="p-4 m-2 rounded"
-            >
-              <StateView></StateView>
-            </Col>
-          </Row>
-        </Col>
+            {/* <Col
+            // xs={4}
+            // style={{ backgroundColor: "rgba(198, 201, 207, 0.2)" }}
+            // className="p-4 m-2 rounded"
+            > */}
+            <StateView></StateView>
+            {/* </Col> */}
+          </div>
+        </div>
       </Container>
     </>
   );

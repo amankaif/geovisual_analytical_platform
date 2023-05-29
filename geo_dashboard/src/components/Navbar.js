@@ -9,15 +9,15 @@ const NavbarTop = function () {
   return (
     <Navbar bg="light" expand="md">
       <Container className="px-1 py-0">
-        <Navbar.Brand href="#MainDashboard" className="ms-2">
+        <Navbar.Brand href="http://localhost:3000/" className="ms-2">
           Geo-Dashboard
         </Navbar.Brand>
         {/* <div className='me-auto' style={{width:'auto'}}></div> */}
 
         <span className="d-flex">
-          <Nav.Link href="#MainDashboard" className="px-4 d-flex">
+          {/* <Nav.Link href="#MainDashboard" className="px-4 d-flex">
             Home
-          </Nav.Link>
+          </Nav.Link> */}
           <Nav.Link
             href="http://localhost:8084/openlayers_app"
             className="px-4 btn-secondary"
@@ -27,9 +27,9 @@ const NavbarTop = function () {
           <Nav.Link href="/upload" className="px-4 btn-secondary">
             Upload shp
           </Nav.Link>
-          <Nav.Link href="/charts" className="px-4 btn-secondary">
+          {/* <Nav.Link href="/charts" className="px-4 btn-secondary">
             Charts
-          </Nav.Link>
+          </Nav.Link> */}
         </span>
         {/* <Navbar.Toggle aria-controls="basic-navbar-nav">Extra</Navbar.Toggle> */}
         {/* <Navbar.Collapse id='basic-navbar-nav'>
