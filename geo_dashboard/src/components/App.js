@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Route, Routes, Link } from "react-router-dom";
 
 import NavbarTop from "./Navbar";
-import Charts from "./Charts";
+import Charts from "./Charts/Charts";
 import UploadSHP from "./UploadSHP";
 import { useEffect, useState } from "react";
 

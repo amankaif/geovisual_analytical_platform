@@ -39,11 +39,7 @@ packages/react-devtools-inline/dist
 packages/react-devtools-shell/dist
 packages/react-devtools-timeline/dist
 
-
-
-
-
-# NODE ---------------------------- 
+# NODE ----------------------------
 
 # Logs
 logs
@@ -175,3 +171,4 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+server_side/features.json

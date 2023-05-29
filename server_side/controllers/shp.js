@@ -4,7 +4,7 @@ import { dirname } from "path";
 import slash from "slash";
 import axios from "axios";
 
-import { featuresObject } from "../server.js";
+import { featuresArray, stateWiseDataObject } from "../server.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -127,6 +127,10 @@ export const shpUpload = (req, res) => {
   });
 };
 
-export const featuresJson = (req, res) => {
-  res.json(featuresObject);
+export const sendFeaturesArray = (req, res) => {
+  res.json(featuresArray);
+};
+
+export const sendStateWiseJson = (req, res) => {
+  res.json(stateWiseDataObject);
 };

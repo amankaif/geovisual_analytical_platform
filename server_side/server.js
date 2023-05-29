@@ -25,46 +25,17 @@ app.use(
 
 app.use(express.json());
 app.use("/shp", shpRoutes);
-// app.use("/auth", authRoutes);
-
-// app.post("/upload_shp", (req, res) => {
-//   console.log(req.body);
-// });
-
-// app.use(cookieParser(process.env.JWT_SECRET));
-// app.use(
-//   session({
-//     secret: process.env.JWT_SECRET,
-//     resave: true,
-//     saveUninitialized: false,
-//     cookie: { maxAge: 1000 * 60 * 60 * 24 }, // 1 day
-//   })
-// );
-
-// app.get("/api", (req, res) => {
-//   console.log("ap/i ok");
-// });
-// MONGOOSE SET UP
-// const mongoose = require("mongoose");
 
 const PORT = process.env.PORT || 5000;
-
-// mongoose
-//   .connect(process.env.MONGO_URL, {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: false,
-//   })
-//   .then(() => {
-//     app.listen(PORT, () => console.log(`server port: ${PORT}`));
-// })
-// .catch((error) => console.log(`${error}, did not connect`));
 
 app.listen(PORT, () => console.log(`server port: ${PORT}`));
 
 // # SAVE LAYER FEATURES TO JSON
 
 var geoJson = {};
-export var featuresObject = {};
+
+export var featuresArray = {};
+export var stateWiseDataObject = {};
 
 const toFeaturesJson = (buffer) => {
   var shpPromise = shp(buffer).then((geoJson) => {
@@ -72,8 +43,14 @@ const toFeaturesJson = (buffer) => {
     //   featuresObject[row.properties.dtname] = ;
     // });
 
-    featuresObject = geoJson;
+    featuresArray = geoJson.features;
+    var tmp = {};
+
+    // console.log(featuresObject.map((item) => ))
+
     // fs.writeFileSync("features.json", JSON.stringify(geoJson));
+
+    toStateWiseData();
   });
 };
 
@@ -85,3 +62,35 @@ var file = fs.readFileSync(
 
 toFeaturesJson(file);
 // console.log("tmp", tmp);
+
+const toStateWiseData = () => {
+  // var finalLabelArray = [];
+  featuresArray.map((item) => {
+    var properties = item.properties;
+    if (stateWiseDataObject[properties.stname]) {
+      stateWiseDataObject[properties.stname] = {
+        ...stateWiseDataObject[properties.stname],
+        2017:
+          stateWiseDataObject[properties.stname][2017] + properties["2017s"],
+        2018:
+          stateWiseDataObject[properties.stname][2018] + properties["2018s"],
+        2019:
+          stateWiseDataObject[properties.stname][2019] + properties["2019s"],
+        2020:
+          stateWiseDataObject[properties.stname][2020] + properties["2020s"],
+        2021:
+          stateWiseDataObject[properties.stname][2021] + properties["2021s"],
+      };
+    } else {
+      stateWiseDataObject[properties.stname] = {
+        ...stateWiseDataObject[properties.stname],
+        2017: properties["2017s"],
+        2018: properties["2018s"],
+        2019: properties["2019s"],
+        2020: properties["2020s"],
+        2021: properties["2021s"],
+      };
+    }
+  });
+  // console.log(stateWiseDataObject);
+};
