@@ -203,7 +203,7 @@ const Overview = (props) => {
   return (
     <>
       {loading ? (
-        <div className="p-6">Loading</div>
+        <div className="p-6">Loading...</div>
       ) : (
         <Row>
           <Line options={options} data={overviewData} />

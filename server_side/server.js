@@ -145,5 +145,5 @@ const toStateWiseData = () => {
         properties["2021s"];
     }
   });
-  // console.log(stateWiseDistrictsObject);
+  console.log(stateWiseDistrictsObject);
 };

@@ -27,6 +27,7 @@ import { Line } from "react-chartjs-2";
 import { MapContext } from "../../contexts/MapContext";
 import Overview from "./Overview";
 import StateView from "./StateView";
+import DistrictBar from "./DistrictBar";
 
 var shpFile;
 
@@ -35,19 +36,6 @@ var featuresJson;
 const Charts = () => {
   const [loading, setLoading] = useState(true);
   const [reRender, setReRender] = useState(false);
-
-  useEffect(() => {
-    // setLoading(true);
-    // (async () => {
-    //   console.log("requesting features");
-    //   await axios.get("http://localhost:5000/shp/features").then((res) => {
-    //     console.log("features recieved");
-    //     setLoading(false);
-    //     featuresJson = res.data;
-    //     // console.log(featuresJson);
-    //   });
-    // })();
-  }, []);
 
   // const { mapJson, setMapJson } = useContext(MapContext);
   return (
@@ -64,27 +52,41 @@ const Charts = () => {
                 Render
               </button>
             </div> */}
-        <div className="h-100 p-2 m-2">
-          <div
-            // style={{ height: "1000" }}
-            className="d-flex flex-row"
+        {/* <div className="h-100 p-2 m-2"> */}
+        <div
+          // style={{ height: "1000" }}
+          className="d-flex flex-row"
+        >
+          <Col
+            xs={6}
+            style={{ backgroundColor: "rgba(198, 201, 207, 0.2)" }}
+            className="p-2 m-2 rounded"
           >
-            <Col
-              xs={7}
-              style={{ backgroundColor: "rgba(198, 201, 207, 0.2)" }}
-              className="p-2 m-2 rounded"
-            >
-              <Overview featuresJson={featuresJson}></Overview>
-            </Col>
-            {/* <Col
+            <Overview />
+          </Col>
+          {/* <Col
             // xs={4}
             // style={{ backgroundColor: "rgba(198, 201, 207, 0.2)" }}
-            // className="p-4 m-2 rounded"
+            className="p-4 m-2 rounded"
             > */}
-            <StateView></StateView>
-            {/* </Col> */}
-          </div>
+          <Col
+            xs={6}
+            className="p-2 m-2 rounded"
+            style={{ backgroundColor: "rgba(198, 201, 207, 0.2)" }}
+          >
+            <StateView />
+          </Col>
+          {/* </Col> */}
         </div>
+        <div className="d-flex flex-row">
+          <Col
+            className="p-2 m-2 rounded"
+            style={{ backgroundColor: "rgba(198, 201, 207, 0.2)" }}
+          >
+            <DistrictBar />
+          </Col>
+        </div>
+        {/* </div> */}
       </Container>
     </>
   );

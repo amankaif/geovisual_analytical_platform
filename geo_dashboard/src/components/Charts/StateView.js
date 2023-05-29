@@ -2,11 +2,15 @@ import React, { useEffect, useState } from "react";
 import {
   Chart as ChartJS,
   ArcElement,
+  RadialLinearScale,
   Tooltip,
   Legend,
   Colors,
+  Filler,
 } from "chart.js";
-import { Doughnut } from "react-chartjs-2";
+import { Doughnut, PolarArea, Radar } from "react-chartjs-2";
+
+ChartJS.register(ArcElement, Tooltip, Legend, Colors, RadialLinearScale);
 
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
@@ -23,6 +27,7 @@ var stateWiseDistrictsObject = {};
 
 var formState = "COUNTRY";
 var formYear = "Cumulative";
+var chartType = "Doughnut Chart";
 
 const StateView = () => {
   const [loading, setLoading] = useState(true);
@@ -59,8 +64,6 @@ const StateView = () => {
         });
     })();
   }, []);
-
-  ChartJS.register(ArcElement, Tooltip, Legend, Colors);
 
   const handleFormState = (e) => {
     formState = e.currentTarget.value;
@@ -122,79 +125,125 @@ const StateView = () => {
     // handleChartDataUpdate();
   };
 
-  return (
-    <>
-      {loading ? (
-        <div className="p-6">Loading</div>
-      ) : (
-        <Col
-          style={{
-            alignContent: "center",
-            backgroundColor: "rgba(198, 201, 207, 0.2)",
-            height: "1000",
-          }}
-          className="p-4 m-2 rounded"
-        >
-          {/* <div className="m-3"> */}
-          <Form id="mainForm" className="m-3">
-            {/* <Col className="p-2 m-2"> */}
-            <Form.Group as={Row} controlId="formStateDropdown">
-              <Form.Select
-                className="m-2"
-                defaultValue="Choose State..."
-                onChange={handleFormState}
-              >
-                {/* <option>CASH-IN</option> */}
-                {/* <option id="transactionTypeCash" value="cash">
-                      CASH_OUT
-                    </option> */}
-                {[
-                  [
-                    "COUNTRY",
-                    ...Object.keys(stateWiseDataObject).toSorted(),
-                  ].map((item) => (
-                    <option id={item} value={item}>
-                      {item}
-                    </option>
-                  )),
-                ]}
-              </Form.Select>
+  const handleChartType = (e) => {
+    chartType = e.currentTarget.value;
+  };
 
-              <Form.Select
-                className="m-2"
-                defaultValue="Choose State..."
-                onChange={handleFormYear}
-              >
-                {["Cumulative", "2017", "2018", "2019", "2020", "2021"].map(
-                  (item) => (
-                    <option id={item} value={item}>
-                      {item}
-                    </option>
-                  )
-                )}
-              </Form.Select>
-            </Form.Group>
-            <div
-              className="btn btn-primary m-2"
-              onClick={handleChartDataUpdate}
-            >
-              Go
-            </div>
-            {/* </Col> */}
-          </Form>
+  const handleGoButton = (e) => {
+    handleChartDataUpdate();
+  };
 
-          {/* {Object.keys(stateWiseDataObject).map((item) => (
-              <a class="dropdown-item" href="#">
-                {item}
-              </a>
-            ))} */}
-          {/* </div> */}
-
+  const returnChartElement = () => {
+    switch (chartType) {
+      case "Doughnut Chart":
+        return (
           <Doughnut
             options={{ responsive: "true" }}
             //   style={{ height: "100%" }}
             data={chartData}
           />
+        );
+      case "Polar Chart":
+        return (
+          <PolarArea
+            options={{ responsive: "true" }}
+            //   style={{ height: "100%" }}
+            data={chartData}
+          />
+        );
+      case "Radar Chart":
+        return (
+          <Radar
+            options={{ responsive: "true" }}
+            //   style={{ height: "100%" }}
+            data={chartData}
+          />
+        );
+    }
+  };
+
+  return (
+    <>
+      {loading ? (
+        <div className="p-6">Loading...</div>
+      ) : (
+        <Col
+          style={{
+            alignContent: "center",
+
+            height: "1000",
+          }}
+          className="p-4 m-2 rounded"
+        >
+          <Form id="mainForm" className="m-3">
+            <Row>
+              <Form.Group as={Col} controlId="formGranularityDropdown">
+                <Form.Select
+                  className="m-2"
+                  defaultValue="Choose State..."
+                  onChange={handleFormState}
+                >
+                  {[
+                    [
+                      "COUNTRY",
+                      ...Object.keys(stateWiseDataObject).toSorted(),
+                    ].map((item) => (
+                      <option id={item} value={item}>
+                        {item}
+                      </option>
+                    )),
+                  ]}
+                </Form.Select>
+                <Form.Select
+                  className="m-2"
+                  defaultValue="Choose State..."
+                  onChange={handleFormYear}
+                >
+                  {["Cumulative", "2017", "2018", "2019", "2020", "2021"].map(
+                    (item) => (
+                      <option id={item} value={item}>
+                        {item}
+                      </option>
+                    )
+                  )}
+                </Form.Select>
+              </Form.Group>
+              <Form.Group as={Col} controlId="formChartTypeDropdown">
+                <Form.Select
+                  className="m-2"
+                  defaultValue="Choose State..."
+                  onChange={handleChartType}
+                >
+                  {["Doughnut Chart", "Polar Chart", "Radar Chart"].map(
+                    (item) => (
+                      <option id={item} value={item}>
+                        {item}
+                      </option>
+                    )
+                  )}
+                </Form.Select>
+              </Form.Group>
+            </Row>
+            <div className="btn btn-primary m-2" onClick={handleGoButton}>
+              Go
+            </div>
+            {/* </Col> */}
+          </Form>
+
+          {/* {formState == "COUNTRY" ? (
+            <Radar
+              options={{ responsive: "true" }}
+              //   style={{ height: "100%" }}
+              data={chartData}
+            />
+          ) : (
+            <PolarArea
+              options={{ responsive: "true" }}
+              //   style={{ height: "100%" }}
+              data={chartData}
+            />
+          )} */}
+          {returnChartElement()}
         </Col>
       )}
     </>
