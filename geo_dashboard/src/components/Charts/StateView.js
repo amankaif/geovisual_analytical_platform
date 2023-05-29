@@ -21,8 +21,8 @@ import axios from "axios";
 var stateWiseDataObject = {};
 var stateWiseDistrictsObject = {};
 
-var formState = "default";
-var formYear = "All";
+var formState = "COUNTRY";
+var formYear = "Cumulative";
 
 const StateView = () => {
   const [loading, setLoading] = useState(true);
@@ -31,7 +31,7 @@ const StateView = () => {
   useEffect(() => {
     setLoading(true);
     (async () => {
-      await axios.get("http://localhost:5000/shp/state_wise").then((res) => {
+      axios.get("http://localhost:5000/shp/state_wise").then((res) => {
         stateWiseDataObject = res.data;
         // console.log(Object.keys(stateWiseDataObject));
         // setLoading(false);
@@ -39,7 +39,7 @@ const StateView = () => {
           labels: Object.keys(stateWiseDataObject),
           datasets: [
             {
-              label: "Total crime for state overall",
+              label: "Total crime for state/district overall",
               data: [12, 19, 3, 5, 2, 3],
 
               borderWidth: 1,
@@ -52,6 +52,7 @@ const StateView = () => {
         .get("http://localhost:5000/shp/state_wise_districts")
         .then((res) => {
           stateWiseDistrictsObject = res.data;
+          //   console.log(stateWiseDistrictsObject);
           // console.log(Object.keys(stateWiseDataObject));
           setLoading(false);
           //   console.log("done loading", loading);
@@ -63,13 +64,15 @@ const StateView = () => {
 
   const handleFormState = (e) => {
     formState = e.currentTarget.value;
-    console.log(formState);
+    // console.log(formState);
   };
 
-  const handleChartDataUpdate = (formYear) => {
-    if (formYear == "Cumulative") {
-      if (formState == "COUNTRY") {
-        var allData = [];
+  const handleChartDataUpdate = () => {
+    var allData = [];
+    var allLabels = [];
+    if (formState == "COUNTRY") {
+      allLabels = Object.keys(stateWiseDataObject);
+      if (formYear == "Cumulative") {
         Object.keys(stateWiseDataObject).map((state) => {
           var sum = 0;
           Object.keys(stateWiseDataObject[state]).map((year) => {
@@ -78,142 +81,45 @@ const StateView = () => {
           allData.push(sum);
         });
 
-        setChartData({
-          ...chartData,
-          labels: Object.keys(stateWiseDataObject),
-          datasets: [{ ...chartData.datasets[0], data: allData }],
-        });
         // data.datasets[0].data = allData;
-        console.log("dataset data Cum", chartData.datasets[0].data);
+        // console.log("dataset data Cum", chartData.datasets[0].data);
+      } else {
+        Object.keys(stateWiseDataObject).map((state) => {
+          allData.push(stateWiseDataObject[state][formYear]);
+        });
+      }
+    } else {
+      allLabels = Object.keys(stateWiseDistrictsObject[formState]);
+      if (formYear == "Cumulative") {
+        Object.keys(stateWiseDistrictsObject[formState]).map((district) => {
+          console.log(district);
+          var sum = 0;
+          Object.keys(stateWiseDistrictsObject[formState][district]).map(
+            (year) => {
+              sum += stateWiseDistrictsObject[formState][district][year];
+            }
+          );
+          allData.push(sum);
+        });
+      } else {
+        // console.log(formState);
+        // console.log(stateWiseDistrictsObject);
+        Object.keys(stateWiseDistrictsObject[formState]).map((district) => {
+          console.log(district);
+          allData.push(stateWiseDistrictsObject[formState][district][formYear]);
+        });
       }
     }
+    setChartData({
+      ...chartData,
+      labels: allLabels,
+      datasets: [{ ...chartData.datasets[0], data: allData }],
+    });
   };
 
   const handleFormYear = (e) => {
     formYear = e.currentTarget.value;
-    console.log(formYear);
-
-    switch (formYear) {
-      case "Cumulative":
-        if (formState == "COUNTRY") {
-          var allData = [];
-          Object.keys(stateWiseDataObject).map((state) => {
-            var sum = 0;
-            Object.keys(stateWiseDataObject[state]).map((year) => {
-              sum += stateWiseDataObject[state][year];
-            });
-            allData.push(sum);
-          });
-
-          setChartData({
-            ...chartData,
-            labels: Object.keys(stateWiseDataObject),
-            datasets: [{ ...chartData.datasets[0], data: allData }],
-          });
-          // data.datasets[0].data = allData;
-          console.log("dataset data Cum", chartData.datasets[0].data);
-        } else {
-          const mainDataObject = 0;
-
-          var allData = [];
-          Object.keys(mainDataObject).map((state) => {
-            var sum = 0;
-            Object.keys(mainDataObject[state]).map((year) => {
-              sum += mainDataObject[state][year];
-            });
-            allData.push(sum);
-          });
-
-          setChartData({
-            ...chartData,
-            labels: Object.keys(mainDataObject),
-            datasets: [{ ...chartData.datasets[0], data: allData }],
-          });
-          // data.datasets[0].data = allData;
-          console.log("dataset data Cum", chartData.datasets[0].data);
-        }
-
-        // setReRender(true);
-
-        break;
-
-      case "2017":
-        var data2017 = [];
-
-        Object.keys(stateWiseDataObject).map((state) => {
-          data2017.push(stateWiseDataObject[state]["2017"]);
-        });
-
-        setChartData({
-          ...chartData,
-          labels: Object.keys(stateWiseDataObject),
-          datasets: [{ ...chartData.datasets[0], data: data2017 }],
-        });
-        // data.datasets[0].data = allData;
-        console.log("dataset data 2017", chartData.datasets[0].data);
-        break;
-
-      case "2018":
-        var data2018 = [];
-
-        Object.keys(stateWiseDataObject).map((state) => {
-          data2018.push(stateWiseDataObject[state]["2018"]);
-        });
-
-        setChartData({
-          ...chartData,
-          labels: Object.keys(stateWiseDataObject),
-          datasets: [{ ...chartData.datasets[0], data: data2018 }],
-        });
-        // data.datasets[0].data = allData;
-        console.log("dataset data 2018", chartData.datasets[0].data);
-        break;
-      case "2019":
-        var data2019 = [];
-
-        Object.keys(stateWiseDataObject).map((state) => {
-          data2019.push(stateWiseDataObject[state]["2019"]);
-        });
-
-        setChartData({
-          ...chartData,
-          labels: Object.keys(stateWiseDataObject),
-          datasets: [{ ...chartData.datasets[0], data: data2019 }],
-        });
-        // data.datasets[0].data = allData;
-        console.log("dataset data 2019", chartData.datasets[0].data);
-        break;
-      case "2020":
-        var data2020 = [];
-
-        Object.keys(stateWiseDataObject).map((state) => {
-          data2020.push(stateWiseDataObject[state]["2020"]);
-        });
-
-        setChartData({
-          ...chartData,
-          labels: Object.keys(stateWiseDataObject),
-          datasets: [{ ...chartData.datasets[0], data: data2020 }],
-        });
-        // data.datasets[0].data = allData;
-        console.log("dataset data 2020", chartData.datasets[0].data);
-        break;
-      case "2021":
-        var data2021 = [];
-
-        Object.keys(stateWiseDataObject).map((state) => {
-          data2021.push(stateWiseDataObject[state]["2021"]);
-        });
-
-        setChartData({
-          ...chartData,
-          labels: Object.keys(stateWiseDataObject),
-          datasets: [{ ...chartData.datasets[0], data: data2021 }],
-        });
-        // data.datasets[0].data = allData;
-        console.log("dataset data 2021", chartData.datasets[0].data);
-        break;
-    }
+    // handleChartDataUpdate();
   };
 
   return (
@@ -243,13 +149,14 @@ const StateView = () => {
                       CASH_OUT
                     </option> */}
                 {[
-                  ["COUNTRY", ...Object.keys(stateWiseDataObject)].map(
-                    (item) => (
-                      <option id={item} value={item}>
-                        {item}
-                      </option>
-                    )
-                  ),
+                  [
+                    "COUNTRY",
+                    ...Object.keys(stateWiseDataObject).toSorted(),
+                  ].map((item) => (
+                    <option id={item} value={item}>
+                      {item}
+                    </option>
+                  )),
                 ]}
               </Form.Select>
 
@@ -267,6 +174,12 @@ const StateView = () => {
                 )}
               </Form.Select>
             </Form.Group>
+            <div
+              className="btn btn-primary m-2"
+              onClick={handleChartDataUpdate}
+            >
+              Go
+            </div>
             {/* </Col> */}
           </Form>
 
